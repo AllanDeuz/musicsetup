@@ -9,17 +9,19 @@ Aplicación diseñada dentro del ramo de Taller de desarrollo de la universidad 
 ### Funcionalidades actualmente disponibles:
 
 - _Genera los array que contienen las frecuencias de cada nota en particular_.
--Captar sonidos externos.
--Realizar la FFT.
--Captar los picos de la frecuencia.
--Comprobrar si el pico es nota musical.
+- Captar sonidos externos.
+- Realizar la FFT.
+- Captar los picos de la frecuencia.
+- Comprobrar si el pico es nota musical.
 
 ### Funcionalidades que se espera en un futuro:
 
--__Presentar la informacion en una interfaz grafica__.
+- __Presentar la informacion en una interfaz grafica__.
 
 
-
+<span style="color:orange">orange</span>  
+<span style="color:lime">lime</span>  
+<font color='red'>rojo</font>
 
 
 

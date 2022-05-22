@@ -18,12 +18,11 @@ Aplicación diseñada dentro del ramo de Taller de desarrollo de la universidad 
 
 - __Presentar la informacion en una interfaz grafica__.
 
-
-<span style="color:F0F8FF">orange</span>  
-<span style="color:A9A9A9">lime</span>  
-<font color='FF0000'>rojo</font>
-
-
+<br>
+<br>
+<br>
+<br>
+<br>
 
 
 _Desarrollador_ : **_Allan Arroyo Rodriguez_**.

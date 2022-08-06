@@ -14,15 +14,7 @@ Aplicación diseñada dentro del ramo de Taller de desarrollo de la universidad 
 - _Capta los picos de la frecuencia_.
 - _Comprueba si el pico es nota musical_.
 
-### Funcionalidades que se espera en un futuro:
-
-- __Presentar la informacion en una interfaz grafica__.
-
 <br>
 <br>
-<br>
-<br>
-<br>
-
 
 _Desarrollador_ : **_Allan Arroyo Rodriguez_**.

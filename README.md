@@ -1,10 +1,8 @@
-# musicsetup
+# Oido Absoluto
 
-## La herramienta para la musica
+## Software de deteccion de notas musicales en tiempo real
 
-_software en desarrollo_. . .
-
-Aplicación diseñada dentro del ramo de Taller de desarrollo de la universidad del bio bio, Concepción.
+_Aplicación diseñada dentro del ramo de Taller de desarrollo de la universidad del Bio bio, Concepción._
 
 ### Funcionalidades actualmente disponibles:
 

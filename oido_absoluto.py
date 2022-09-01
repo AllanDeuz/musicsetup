@@ -38,30 +38,10 @@ def main():
         initialHzMi
     ], dtype=float)
 
-    def nPrevious(Hz):
-        vPrevious = np.array([], dtype=float)
-        for i in range(5):
-            value = 5 / 10 - i / 10
-            vPrevious = np.append(vPrevious, (Hz - value))
-        return vPrevious
-
-    def nSubsequent(Hz):
-        vSubsequent = np.array([], dtype=float)
-        for i in range(5):
-            value = i / 10 + 1 / 10
-            vSubsequent = np.append(vSubsequent, (Hz + value))
-        return vSubsequent
-
-    def vPrevious(Hz):
-        valuesPrevious = np.array([], dtype=float)
-        valuesPrevious = np.append(valuesPrevious, nPrevious(Hz))
-        valuesPrevious = np.append(valuesPrevious, Hz)  # Add the original value
-        return valuesPrevious
-
-    def vSubsequent(Hz):
-        valuesSubsequent = np.array([], dtype=float)
-        valuesSubsequent = np.append(valuesSubsequent, nSubsequent(Hz))
-        return valuesSubsequent
+    def vHzValues(Hz):
+        hzValues = np.array([], dtype=float)
+        hzValues = np.append(hzValues, Hz)
+        return hzValues
 
     def autoRounding(Hz):
         hzRound = np.array([], dtype=float)
@@ -71,9 +51,7 @@ def main():
 
     def hzAutoStorage(Hz):
         allHz = np.array([], dtype=float)
-        allHz = np.append(allHz, vPrevious(Hz))
-        allHz = np.append(allHz, vSubsequent(Hz))
-
+        allHz = np.append(allHz, vHzValues(Hz))
         return allHz
 
     # Frecuencias de Fa, Fa# y Sol
@@ -81,7 +59,8 @@ def main():
     hzType1 = np.array([], dtype=float)
     for i in range(3):
         for j in range(9):
-            nextHz = vInitialHz[i] * (2 ** j)  # Multiplico por 2 para que sean las notas de la octava superior
+            # Multiplico por 2 para que sean las notas de la octava superior
+            nextHz = vInitialHz[i] * (2 ** j)
             hzType1 = np.append(hzType1, hzAutoStorage(nextHz))
             hzType1 = autoRounding(hzType1)
 
@@ -95,9 +74,9 @@ def main():
             hzType2 = autoRounding(hzType2)
 
     # Ingreso de las frecuencias en los array de las notas Fa, Fa# y Sol
-    # 99 valores en total para cada nota.
+    # 9 valores en total para cada nota.
 
-    total = 99
+    total = 9
 
     FaHz = np.array([], dtype=float)
     for i in range(total):
@@ -114,9 +93,9 @@ def main():
     cluster1 = np.array([FaHz, FaSHz, SolHz], dtype=float)
 
     # Ingreso de las frecuencias en los array de las notas Sol#, La, La#, Si, Do, Do#, Re, Re# y Mi
-    # 88 valores en total para cada nota.
+    # 8 valores en total para cada nota.
 
-    total = 88
+    total = 8
 
     SolSHz = np.array([], dtype=float)
     for i in range(total):
@@ -154,7 +133,7 @@ def main():
     for i in range(total * 8, total * 9):
         MiHz = np.append(MiHz, hzType2[i])
 
-    cluster2 = np.array([SolSHz, LaHz, LaSHz, SiHz, DoHz, DoSHz, ReHz, ReSHz, MiHz], dtype=float)
+    cluster2 = np.array([SolSHz, LaHz, LaSHz, SiHz, DoHz, ReHz, ReSHz, MiHz], dtype=float)
 
     # FUNCIONES PARA DETERMINAR NOTA MUSICAL vvv
 
@@ -178,20 +157,18 @@ def main():
         return hzApproximation
 
     def determineMusicalNote(maxHz):
-
         hzPosition = np.where(hzType1 == maxHz)[0][0]
-
         if maxHz in cluster1[0]:
             print("Es un Fa en: ", hzType1[hzPosition], "Hz")
         elif maxHz in cluster1[1]:
             print("Es un Fa# en: ", hzType1[hzPosition], "Hz")
         elif maxHz in cluster1[2]:
             print("Es un Sol en: ", hzType1[hzPosition], "Hz")
+        else:
+            return 0
 
     def determineMusicalNote2(maxHz):
-
         hzPosition = np.where(hzType2 == maxHz)[0][0]
-
         if maxHz in cluster2[0]:
             print("Es un Sol# en: ", hzType2[hzPosition], "Hz")
         elif maxHz in cluster2[1]:
@@ -210,6 +187,8 @@ def main():
             print("Es un Re# en: ", hzType2[hzPosition], "Hz")
         elif maxHz in cluster2[8]:
             print("Es un Mi en: ", hzType2[hzPosition], "Hz")
+        else:
+            return 0
 
     matplotlib.use('TkAgg')
 
@@ -232,40 +211,46 @@ def main():
     # Creamos una gráfica con 2 subplots y configuramos los ejes
 
     fig, (ax, ax1) = plt.subplots(2)
-
     x_audio = np.arange(0, FRAMES, 1)
     x_fft = np.linspace(0, Fs, FRAMES)
     line, = ax.plot(x_audio, np.random.rand(FRAMES), 'r')
     line_fft, = ax1.semilogx(x_fft, np.random.rand(FRAMES), 'b')
-
     ax.set_ylim(-32500, 32500)
     ax.ser_xlim = (0, FRAMES)
     Fmin = 1
     Fmax = 5000
     ax1.set_xlim(Fmin, Fmax)
-
     fig.show()
 
-    F = (Fs / FRAMES) * np.arange(0, FRAMES // 2)  # Creamos el vector de frecuencia para encontrar la frecuencia dominante
+    # Creamos el vector de frecuencia para encontrar la frecuencia dominante
+    F = (Fs / FRAMES) * np.arange(0, FRAMES // 2)
 
     while True:
 
         data = stream.read(FRAMES)  # Leemos paquetes de longitud FRAMES
-        dataInt = struct.unpack(str(FRAMES) + 'h', data)  # Convertimos los datos que se encuentran empaquetados en bytes
+        # Convertimos los datos que se encuentran empaquetados en bytes
+        dataInt = struct.unpack(str(FRAMES) + 'h', data)
 
-        line.set_ydata(dataInt)  # Asignamos los datos a la curva de la variación temporal
+        # Asignamos los datos a la curva de la variación temporal
+        line.set_ydata(dataInt)
 
-        M_gk = abs(fourier.fft(dataInt) / FRAMES)  # Calculamos la FFT y la Magnitud de la FFT del paqute de datos
+        # Calculamos la FFT y la Magnitud de la FFT del paqute de datos
+        M_gk = abs(fourier.fft(dataInt) / FRAMES)
 
         ax1.set_ylim(0, np.max(M_gk + 10))
-        line_fft.set_ydata(M_gk)  # Asigmanos la Magnitud de la FFT a la curva del espectro
+        # Asigmanos la Magnitud de la FFT a la curva del espectro
+        line_fft.set_ydata(M_gk)
 
-        M_gk = M_gk[0:FRAMES // 2]  # Tomamos la mitad del espectro para encontrar la Frecuencia Dominante
+        # Tomamos la mitad del espectro para encontrar la Frecuencia Dominante
+        M_gk = M_gk[0:FRAMES // 2]
         Posm = np.where(M_gk == np.max(M_gk))
-        maxHz = F[Posm]  # Encontramos la frecuencia que corresponde con el máximo de M_gk
-        maxHz = np.round(maxHz, 3)  # Redondeamos la frecuencia encontrada a 3 decimales
+        # Encontramos la frecuencia que corresponde con el máximo de M_gk
+        maxHz = F[Posm]
+        # Redondeamos la frecuencia encontrada a 3 decimales
+        maxHz = np.round(maxHz, 3)
 
-        hzApproximation = approximateHz(hzType1, maxHz)  # Calculamos la aproximación de la frecuencia
+        # Calculamos la aproximación de la frecuencia
+        hzApproximation = approximateHz(hzType1, maxHz)
         hzApproximation2 = approximateHz(hzType2, maxHz)
 
         difference = abs(maxHz - hzApproximation)
@@ -277,17 +262,19 @@ def main():
         resp2 = errorRange(difference2)
 
         if resp and resp2:
-        # Elegimos la aproximación que se va a usar, criterio: la menor se escoge, si d < d2 -> True, si d > d2 -> False, si d = d2 -> True
+            # Elegimos la aproximación que se va a usar, criterio:
+            # la menor se escoge, si d < d2 -> True, si d > d2 -> False, si d = d2 -> True
             chosenHzApproximation = chooseApproximation(difference, difference2)
             if chosenHzApproximation:
                 determineMusicalNote(hzApproximation)
-            elif not chosenHzApproximation:
+            else:
                 determineMusicalNote2(hzApproximation2)
-
         elif resp and not resp2:
             determineMusicalNote(hzApproximation)
         elif not resp and resp2:
             determineMusicalNote2(hzApproximation2)
+        else:
+            print("No estas afinado")
 
         fig.canvas.draw()
         fig.canvas.flush_events()

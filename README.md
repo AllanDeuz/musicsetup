@@ -23,6 +23,3 @@ Datos técnicos:
 - _Archivo .exe:_ https://drive.google.com/file/d/12mq7KGRuwkHVBudWgkeE6RSEHafew2BQ/view?usp=sharing
 
 _Desarrollador_ : **_Allan Arroyo Rodriguez_**.
-
-
-_Desarrollador_ : **_Allan Arroyo Rodriguez_**.

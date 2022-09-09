@@ -38,31 +38,10 @@ def main():
         initialHzMi
     ], dtype=float)
 
-    def nPrevious(Hz):
-        vPrevious = np.array([], dtype=float)
-        for i in range(5):
-            value = 5 / 10 - i / 10
-            vPrevious = np.append(vPrevious, (Hz - value))
-        return vPrevious
-
-    def nSubsequent(Hz):
-        vSubsequent = np.array([], dtype=float)
-        for i in range(5):
-            value = i / 10 + 1 / 10
-            vSubsequent = np.append(vSubsequent, (Hz + value))
-        return vSubsequent
-
-    def vPrevious(Hz):
-        valuesPrevious = np.array([], dtype=float)
-        valuesPrevious = np.append(valuesPrevious, nPrevious(Hz))
-        # Add the original value
-        valuesPrevious = np.append(valuesPrevious, Hz)
-        return valuesPrevious
-
-    def vSubsequent(Hz):
-        valuesSubsequent = np.array([], dtype=float)
-        valuesSubsequent = np.append(valuesSubsequent, nSubsequent(Hz))
-        return valuesSubsequent
+    def vHzValues(Hz):
+        Hzvalues = np.array([], dtype=float)
+        Hzvalues = np.append(Hzvalues, Hz)
+        return Hzvalues
 
     def autoRounding(Hz):
         hzRound = np.array([], dtype=float)
@@ -72,8 +51,8 @@ def main():
 
     def hzAutoStorage(Hz):
         allHz = np.array([], dtype=float)
-        allHz = np.append(allHz, vPrevious(Hz))
-        allHz = np.append(allHz, vSubsequent(Hz))
+        allHz = np.append(allHz, vHzValues(Hz))
+        #allHz = np.append(allHz, vSubsequent(Hz))
         return allHz
 
     # Frecuencias de Fa, Fa# y Sol
@@ -96,9 +75,9 @@ def main():
             hzType2 = autoRounding(hzType2)
 
     # Ingreso de las frecuencias en los array de las notas Fa, Fa# y Sol
-    # 99 valores en total para cada nota.
+    # 9 valores en total para cada nota.
 
-    total = 99
+    total = 9
 
     FaHz = np.array([], dtype=float)
     for i in range(total):
@@ -115,9 +94,9 @@ def main():
     cluster1 = np.array([FaHz, FaSHz, SolHz], dtype=float)
 
     # Ingreso de las frecuencias en los array de las notas Sol#, La, La#, Si, Do, Do#, Re, Re# y Mi
-    # 88 valores en total para cada nota.
+    # 8 valores en total para cada nota.
 
-    total = 88
+    total = 8
 
     SolSHz = np.array([], dtype=float)
     for i in range(total):
@@ -187,6 +166,8 @@ def main():
             print("Es un Fa# en: ", hzType1[hzPosition], "Hz")
         elif maxHz in cluster1[2]:
             print("Es un Sol en: ", hzType1[hzPosition], "Hz")
+        else:
+            return 0
 
     def determineMusicalNote2(maxHz):
         hzPosition = np.where(hzType2 == maxHz)[0][0]
@@ -208,6 +189,8 @@ def main():
             print("Es un Re# en: ", hzType2[hzPosition], "Hz")
         elif maxHz in cluster2[8]:
             print("Es un Mi en: ", hzType2[hzPosition], "Hz")
+        else:
+            return 0
 
     matplotlib.use('TkAgg')
 

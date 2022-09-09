@@ -15,4 +15,14 @@ _Aplicación diseñada dentro del ramo de Taller de desarrollo de la universidad
 <br>
 <br>
 
+Datos técnicos: 
+
+- _Lenguaje de programación:_ Python 3.10.7
+- _Librerias:_ numpy, scipy, pyaudio, matplotlib, struct, statsmodels 
+- _Ejecución:_ python3 oido_absoluto.py
+- _Archivo .exe:_ https://drive.google.com/file/d/12mq7KGRuwkHVBudWgkeE6RSEHafew2BQ/view?usp=sharing
+
+_Desarrollador_ : **_Allan Arroyo Rodriguez_**.
+
+
 _Desarrollador_ : **_Allan Arroyo Rodriguez_**.
